@@ -2,25 +2,30 @@
  * Created by iyasuwatts on 10/17/17.
  */
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
-    static int AreYouRight(int val, int Number, int rounds) {
-        if (val == Number){
-            System.out.print("That's right!");
-            System.out.print(" ");
-            rounds = 0;
-            return rounds;
-        }else if (val > Number){
-            System.out.print("Too Large!");
-            System.out.print(" ");
-            return rounds--;
-        }else
-            System.out.print("Too Small!");
-            System.out.print(" ");
-        return rounds--;
+    static int AreYouRight(String n, int Number, int rounds) {
+        try {
+            int val = Integer.valueOf(n);
+            if (val == Number) {
+                System.out.println("That's right! ");
+                rounds = 0;
+                return rounds;
+            } else if (val > Number) {
+                System.out.println("Too Large! ");
+            } else{
+                System.out.println("Too Small! ");
+            }
+            return --rounds;
+        }catch(NumberFormatException error){
+            System.out.println("This is not an Int value! ");
+            return --rounds;
+        }
     }
+
 
     public static void main(String[] args){
         System.out.println("Welcome to the Guessing Game.");
@@ -32,9 +37,10 @@ public class Main {
         int Number = (int)Math.floor(Math.random() *(max - min +1) + min);
         while (rounds > 0) {
             System.out.print("Enter a Number: ");
-            int n = in.nextInt();
+            //int n = in.nextInt();
+            String n = in.next();
             rounds = AreYouRight(n, Number, rounds);
-            if (rounds != 0) continue;
+            //if (rounds != 0) continue;
         }
 
 
