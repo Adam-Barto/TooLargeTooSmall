@@ -7,12 +7,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    static int AreYouRight(String n, int Number, int rounds) {
-        try {
-            int val = Integer.valueOf(n);
+    static int AreYouRight(int val, int Number, int rounds) {
             if (val == Number) {
-                System.out.println("That's right! ");
-                rounds = 0;
+                System.out.println("That's right!");
+                rounds = -1;
                 return rounds;
             } else if (val > Number) {
                 System.out.println("Too Large! ");
@@ -20,10 +18,6 @@ public class Main {
                 System.out.println("Too Small! ");
             }
             return --rounds;
-        }catch(NumberFormatException error){
-            System.out.println("This is not an Int value! ");
-            return --rounds;
-        }
     }
 
 
@@ -37,11 +31,25 @@ public class Main {
         int Number = (int)Math.floor(Math.random() *(max - min +1) + min);
         while (rounds > 0) {
             System.out.print("Enter a Number: ");
-            //int n = in.nextInt();
-            String n = in.next();
-            rounds = AreYouRight(n, Number, rounds);
+            try {
+                int n = in.nextInt();
+                rounds = AreYouRight(n, Number, rounds);
+            }catch (InputMismatchException error){
+                System.out.println("That is not an Int Value!");
+                System.out.println("That costs you a round.");
+                rounds = --rounds;
+                in.nextLine(); // Prevents infinite loops by clearing out the in input.
+            }
+
             //if (rounds != 0) continue;
         }
+        if (rounds == 0 ){
+            System.out.println("You lose, the Number was "+ Number);
+        }else
+        {
+            System.out.println("You Win!, the Number was "+ Number);
+        }
+
 
 
         
